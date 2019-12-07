@@ -19,7 +19,7 @@ https://en.wikipedia.org
 
 
 
-##### 디자인 패턴에 대한 세부 내용은 Notion으로 정리하였습니다.
+##### 디자인 패턴에 대한 세부 내용은 [Notion](https://www.notion.so/afmadadans/e79d2aa4e05047399158f2382dd10ed4?v=667ced5d00c14c8692f8c9b20ac219c5)으로 정리하였습니다.
 
 ### Creational Pattern: 객체 생성
 
