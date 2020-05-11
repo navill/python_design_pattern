@@ -109,8 +109,9 @@ class Waiter:
                  builder.add_sauce,
                  builder.add_topping,
                  builder.bake)
-        [step() for step in steps]
-
+        # [step() for step in steps]
+        for step in steps:
+            step()
     # 최종 결과물(피자) 출력
     @property
     def pizza(self):
@@ -122,13 +123,13 @@ def validate_style(builders):
     try:
         input_msg = 'What pizza would you like, [m]argarita or [c]reamy bacon? '
         pizza_style = input(input_msg)
-        builder = builders[pizza_style]
+        builder = builders[pizza_style]()
         valid_input = True
     except KeyError:
         error_msg = 'Sorry, only margarita (key m) and creamy bacon (key c) are available'
         print(error_msg)
-        return (False, None)
-    return (True, builder)
+        return False, None
+    return True, builder
 
 
 def main():
