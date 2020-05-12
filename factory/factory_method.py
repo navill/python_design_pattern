@@ -1,4 +1,5 @@
 import json
+import os
 import xml.etree.ElementTree as etree
 
 
@@ -35,6 +36,7 @@ def dataextraction_factory(filepath):
         raise ValueError('Cannot extract data from {}'.format(filepath))
     return extractor(filepath)
 
+
 # extract_data_from: dataextraction_factory wrapper
 def extract_data_from(filepath):
     factory_obj = None
@@ -50,7 +52,7 @@ def main():
     # sqlite_factory = extract_data_from('data/person.sq3')
     print()
 
-    json_factory = extract_data_from('data/movies.json')
+    json_factory = extract_data_from('../data/movies.json')
     print('json_factory', id(json_factory))
     json_data = json_factory.parsed_data
     print(f'Found: {len(json_data)} movies')
@@ -67,7 +69,7 @@ def main():
             print(f"Genre: {genre}")
         print()
 
-    xml_factory = extract_data_from('data/person.xml')
+    xml_factory = extract_data_from('../data/person.xml')
     print('xml_factory', id(xml_factory))
     xml_data = xml_factory.parsed_data
     liars = xml_data.findall(f".//person[lastName='Liar']")
