@@ -1,5 +1,6 @@
 import functools
 
+
 def memoize(fn):
     cache = dict()
 
@@ -11,25 +12,28 @@ def memoize(fn):
 
     return memoizer
 
+
 @memoize
 def number_sum(n):
     '''Returns the sum of the first n numbers'''
-    assert(n >= 0), 'n must be >= 0'
+    assert (n >= 0), 'n must be >= 0'
     if n == 0:
         return 0
     else:
-        return n + number_sum(n-1)
+        return n + number_sum(n - 1)
+
 
 @memoize
 def fibonacci(n):
     '''Returns the suite of Fibonacci numbers'''
-    assert(n >= 0), 'n must be >= 0'
+    assert (n >= 0), 'n must be >= 0'
     if n in (0, 1):
         return n
     else:
-        return fibonacci(n-1) + fibonacci(n-2)
+        return fibonacci(n - 1) + fibonacci(n - 2)
 
-def main():
+
+def main(number):
     from timeit import Timer
 
     to_execute = [
@@ -42,9 +46,12 @@ def main():
     for item in to_execute:
         fn = item[0]
         print(f'Function "{fn.__name__}": {fn.__doc__}')
+        print(fn(number))
         t = item[1]
         print(f'Time: {t.timeit()}')
         print()
 
+
 if __name__ == '__main__':
-    main()
+    number = 11
+    main(11)
