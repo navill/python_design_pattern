@@ -1,4 +1,6 @@
 sum_cache = {0: 0}
+
+
 def number_sum(n):
     '''Returns the sum of the first n numbers'''
     assert (n >= 0), 'n must be >= 0'
@@ -10,6 +12,7 @@ def number_sum(n):
     sum_cache[n] = res
 
     return res
+
 
 if __name__ == '__main__':
     from timeit import Timer
