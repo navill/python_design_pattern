@@ -5,8 +5,8 @@ from typing import Any
 
 class Builder(metaclass=ABCMeta):
     """
-    The Builder interface specifies methods for creating the different parts of
-    the Product objects.
+    builder는 product의 일부를 생성하기 위해 필요한 메서드를 갖는다.
+    a + b + c -> product
     """
 
     def product(self) -> None:
@@ -26,16 +26,9 @@ class Builder(metaclass=ABCMeta):
 
 
 class ConcreteBuilder1(Builder):
-    """
-    The Concrete Builder classes follow the Builder interface and provide
-    specific implementations of the building steps. Your program may have
-    several variations of Builders, implemented differently.
-    """
-
     def __init__(self) -> None:
         """
-        A fresh builder instance should contain a blank product object, which is
-        used in further assembly.
+        __init__이 실행될 때 새로운 Product()로 갱신
         """
         self.reset()
 
@@ -45,22 +38,10 @@ class ConcreteBuilder1(Builder):
     @property
     def product(self) -> Product1:
         """
-        Concrete Builders are supposed to provide their own methods for
-        retrieving results. That's because various types of builders may create
-        entirely different products that don't follow the same interface.
-        Therefore, such methods cannot be declared in the base Builder interface
-        (at least in a statically typed programming language).
-
-        Usually, after returning the end result to the client, a builder
-        instance is expected to be ready to start producing another product.
-        That's why it's a usual practice to call the reset method at the end of
-        the `getProduct` method body. However, this behavior is not mandatory,
-        and you can make your builders wait for an explicit reset call from the
-        client code before disposing of the previous result.
+        reset(): 일반적으로 클라이언트가 결과값을 반환하면, builder instance는 새로운 product를 생성할 준비 상태가 되어야한다.
+        product 또는 클라이언트에서 reset을 실행
         """
         product = self._product
-        # reset(): 일반적으로 클라이언트가 결과값을 반환하면, builder instance는 새로운 product를 생성할 준비 상태가 되어야한다.
-        # product 또는 클라이언트에서 reset을 실행
         self.reset()
         return product
 
@@ -76,12 +57,9 @@ class ConcreteBuilder1(Builder):
 
 class Product1:
     """
-    It makes sense to use the Builder pattern only when your products are quite
-    complex and require extensive configuration.
-
-    Unlike in other creational patterns, different concrete builders can produce
-    unrelated products. In other words, results of various builders may not
-    always follow the same interface.
+    Product가 복잡하고 클 경우 Builder 패턴을 사용
+    - builder가 동일한 product를 생성하지 않음
+    - product가 다른 형태의 결과를 생성해도 무방하다(다른 creational pattern과 다름)
     """
 
     def __init__(self) -> None:
@@ -96,10 +74,8 @@ class Product1:
 
 class Director:
     """
-    The Director is only responsible for executing the building steps in a
-    particular sequence. It is helpful when producing products according to a
-    specific order or configuration. Strictly speaking, the Director class is
-    optional, since the client can control builders directly.
+    Driector는 concrete builder를 (순서에 맞게)실행하기 위해 사용됨: 선택사항
+    - Concrete builder는 Director뿐만 아니라 Client에서 실행할 수 있음
     """
 
     def __init__(self) -> None:
@@ -111,17 +87,7 @@ class Director:
 
     @builder.setter
     def builder(self, builder: Builder) -> None:
-        """
-        The Director works with any builder instance that the client code passes
-        to it. This way, the client code may alter the final type of the newly
-        assembled product.
-        """
         self._builder = builder
-
-    """
-    The Director can construct several product variations using the same
-    building steps.
-    """
 
     def build_minimal_viable_product(self) -> None:
         self.builder.produce_part_a()
@@ -134,9 +100,7 @@ class Director:
 
 if __name__ == "__main__":
     """
-    The client code creates a builder object, passes it to the director and then
-    initiates the construction process. The end result is retrieved from the
-    builder object.
+    Client -> Builder object -> Director로 전달 -> product 생성
     """
 
     director = Director()
